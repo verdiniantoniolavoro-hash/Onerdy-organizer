@@ -1,63 +1,69 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nerdy Organizer</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css" rel="stylesheet"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nerdy Organizer</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
-  <header>
-    <div>
-      <h1>Nerdy Organizer</h1>
-      <p>Il tuo assistente vocale personale completo</p>
-    </div>
-    <div class="user-info">
-      <div class="user-avatar" id="userAvatar">U</div>
-      <span id="userName">Utente</span>
-    </div>
-  </header>
-  <div class="tabs">
-    <div class="tab active" data-tab="dashboard">Dashboard</div>
-    <div class="tab" data-tab="calendar">Calendario</div>
-    <div class="tab" data-tab="tasks">Impegni</div>
-    <div class="tab" data-tab="notes">Note</div>
-    <div class="tab" data-tab="recordings">Registrazioni</div>
-    <div class="tab" data-tab="assistant">Assistente</div>
-    <div class="tab" data-tab="settings">Impostazioni</div>
+<header>
+  <div>
+    <h1>Nerdy Organizer</h1>
+    <p>Il tuo assistente vocale personale completo</p>
   </div>
-  <div id="dashboard" class="tab-content active">
-    <div class="voice-control">
-      <button class="voice-btn" id="voiceBtn"><span>🎤</span> Attiva Nerdy</button>
-      <div class="status" id="status">Pronto all'uso. Di' "Ciao Nerdy" per iniziare.</div>
+  <div class="user-info">
+    <div class="user-avatar" id="userAvatar">U</div>
+    <span id="userName">Utente</span>
+  </div>
+</header>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" data-tab="dashboard">Dashboard</div>
+  <div class="tab" data-tab="calendar">Calendario</div>
+  <div class="tab" data-tab="tasks">Impegni</div>
+  <div class="tab" data-tab="notes">Note</div>
+  <div class="tab" data-tab="recordings">Registrazioni</div>
+  <div class="tab" data-tab="assistant">Assistente</div>
+  <div class="tab" data-tab="settings">Impostazioni</div>
+</div>
+
+<!-- Contenuti tab: Dashboard, Tasks, Notes, Recordings, Assistant, Settings -->
+<div id="dashboard" class="tab-content active">
+  <div class="voice-control">
+    <button class="voice-btn" id="voiceBtn"><span>🎤</span> Attiva Nerdy</button>
+    <div class="status" id="status">Pronto all'uso. Di' "Ciao Nerdy" per iniziare.</div>
+  </div>
+  <div class="dashboard">
+    <div class="card">
+      <h3>I miei Impegni</h3>
+      <div class="list-container" id="taskList"><p>Nessun impegno</p></div>
     </div>
-    <div class="dashboard">
-      <div class="card">
-        <h3>I miei Impegni</h3>
-        <div class="list-container" id="taskList"><p>Nessun impegno</p></div>
+    <div class="card">
+      <h3>I miei Appuntamenti</h3>
+      <div class="list-container" id="appointmentList"><p>Nessun appuntamento</p></div>
+    </div>
+    <div class="card">
+      <h3>Le mie Note</h3>
+      <div class="list-container" id="noteList"><p>Nessuna nota</p></div>
+    </div>
+    <div class="card">
+      <h3>Lista della Spesa</h3>
+      <div style="margin-bottom:8px;">
+        <input id="shoppingInput" placeholder="Nuovo articolo (es. Latte)" />
+        <button class="btn" onclick="addShoppingItem()">Aggiungi alla lista</button>
       </div>
-      <div class="card">
-        <h3>I miei Appuntamenti</h3>
-        <div class="list-container" id="appointmentList"><p>Nessun appuntamento</p></div>
-      </div>
-      <div class="card">
-        <h3>Le mie Note</h3>
-        <div class="list-container" id="noteList"><p>Nessuna nota</p></div>
-      </div>
-      <div class="card">
-        <h3>Lista della Spesa</h3>
-        <div style="margin-bottom:8px;">
-          <input id="shoppingInput" placeholder="Nuovo articolo (es. Latte)" />
-          <button class="btn" onclick="addShoppingItem()">Aggiungi alla lista</button>
-        </div>
-        <div class="list-container" id="shoppingList"><p>Lista vuota</p></div>
-      </div>
+      <div class="list-container" id="shoppingList"><p>Lista vuota</p></div>
     </div>
   </div>
 </div>
-<div class="voice-feedback" id="voiceFeedback"><span>🎤</span></div>
+
+<!-- Altre tab rimaste vuote per brevità, ma nel JS saranno collegate -->
+
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/locale/it.js"></script>
 <script src="app.js"></script>
