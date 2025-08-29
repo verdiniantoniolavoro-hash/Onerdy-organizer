@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nerdy Organizer</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- FullCalendar (CDN) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Nerdy Organizer</h1>
+        <p>Il tuo assistente vocale personale completo</p>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">U</div>
+        <span id="userName">Utente</span>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="dashboard">Dashboard</div>
+      <div class="tab" data-tab="calendar">Calendario</div>
+      <div class="tab" data-tab="tasks">Impegni</div>
+      <div class="tab" data-tab="notes">Note</div>
+      <div class="tab" data-tab="recordings">Registrazioni</div>
+      <div class="tab" data-tab="assistant">Assistente</div>
+      <div class="tab" data-tab="settings">Impostazioni</div>
+    </div>
+
+    <!-- Contenuti tab -->
+    <div id="dashboard" class="tab-content active">
+      <div class="voice-control">
+        <button class="voice-btn" id="voiceBtn"><span>🎤</span> Attiva Nerdy</button>
+        <div class="status" id="status">Pronto all'uso. Di' "Ciao Nerdy" per iniziare.</div>
+      </div>
+
+      <div class="dashboard">
+        <div class="card">
+          <h3>I miei Impegni</h3>
+          <div class="list-container" id="taskList"><p>Nessun impegno</p></div>
+        </div>
+
+        <div class="card">
+          <h3>I miei Appuntamenti</h3>
+          <div class="list-container" id="appointmentList"><p>Nessun appuntamento</p></div>
+        </div>
+
+        <div class="card">
+          <h3>Le mie Note</h3>
+          <div class="list-container" id="noteList"><p>Nessuna nota</p></div>
+        </div>
+
+        <div class="card">
+          <h3>Lista della Spesa</h3>
+          <div style="margin-bottom:8px;">
+            <input id="shoppingInput" placeholder="Nuovo articolo (es. Latte)" />
+            <button class="btn" onclick="addShoppingItem()">Aggiungi alla lista</button>
+          </div>
+          <div class="list-container" id="shoppingList"><p>Lista vuota</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="calendar" class="tab-content">
+      <div class="card">
+        <h3>Calendario</h3>
+        <div id="calendar"></div>
+      </div>
+    </div>
+
+    <div id="tasks" class="tab-content">
+      <div class="dashboard">
+        <div class="card">
+          <h3>Nuovo Impegno</h3>
+          <div class="input-group">
+            <input type="text" id="taskInput" placeholder="Descrizione impegno" />
+            <button class="btn" onclick="addTask()">Aggiungi Impegno</button>
+          </div>
+
+          <h3>Nuovo Appuntamento</h3>
+          <div class="input-group">
+            <input type="text" id="appointmentInput" placeholder="Descrizione appuntamento" />
+            <input type="datetime-local" id="appointmentDate" />
+            <button class="btn" onclick="addAppointment()">Aggiungi Appuntamento</button>
+          </div>
+
+          <h3>Nuova Scadenza</h3>
+          <div class="input-group">
+            <input type="text" id="deadlineInput" placeholder="Descrizione scadenza" />
+            <input type="datetime-local" id="deadlineDate" />
+            <button class="btn" onclick="addDeadline()">Aggiungi Scadenza</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>I miei Impegni</h3>
+          <div class="list-container" id="fullTaskList"></div>
+
+          <h3>I miei Appuntamenti</h3>
+          <div class="list-container" id="fullAppointmentList"></div>
+
+          <h3>Le mie Scadenze</h3>
+          <div class="list-container" id="fullDeadlineList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="notes" class="tab-content">
+      <div class="dashboard">
+        <div class="card">
+          <h3>Nuova Nota</h3>
+          <div class="input-group">
+            <input type="text" id="noteInput" placeholder="Titolo nota" />
+            <textarea id="noteContent" rows="5" placeholder="Contenuto nota"></textarea>
+            <button class="btn" onclick="addNote()">Aggiungi Nota</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Le mie Note</h3>
+          <div class="list-container" id="fullNoteList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="recordings" class="tab-content">
+      <div class="dashboard">
+        <div class="card">
+          <h3>Registratore Vocale</h3>
+          <div class="status" id="recorderStatus">Pronto a registrare</div>
+          <div class="recorder-controls">
+            <button class="recorder-btn record-btn" id="recordBtn"><span>●</span> Registra</button>
+            <button class="recorder-btn stop-btn" id="stopBtn" disabled><span>■</span> Stop</button>
+            <button class="recorder-btn play-btn" id="playBtn" disabled><span>▶</span> Ascolta</button>
+          </div>
+
+          <div class="input-group">
+            <input type="text" id="recordingName" placeholder="Nome registrazione" />
+            <button class="btn" id="saveBtn" disabled>Salva Registrazione</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Le mie Registrazioni</h3>
+          <div class="list-container" id="recordingsList"><p>Nessuna registrazione</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="assistant" class="tab-content">
+      <div class="dashboard">
+        <div class="card">
+          <h3>Conversa con Nerdy</h3>
+          <div class="conversation" id="conversation">
+            <div class="message nerdy-message">Ciao! Sono Nerdy, il tuo assistente virtuale. Come posso aiutarti?</div>
+          </div>
+          <div class="voice-control">
+            <button class="voice-btn" id="conversationBtn"><span>🎤</span> Parla con Nerdy</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Comandi Vocali</h3>
+          <div class="list-container">
+            <div class="list-item"><strong>"Ciao Nerdy"</strong> - Attiva l'assistente</div>
+            <div class="list-item"><strong>"Aggiungi impegno [testo]"</strong> - Crea un nuovo impegno</div>
+            <div class="list-item"><strong>"Aggiungi appuntamento [testo]"</strong> - Crea un nuovo appuntamento</div>
+            <div class="list-item"><strong>"Aggiungi scadenza [testo]"</strong> - Crea una nuova scadenza</div>
+            <div class="list-item"><strong>"Aggiungi nota [testo]"</strong> - Crea una nuova nota</div>
+            <div class="list-item"><strong>"Aggiungi alla lista [articolo]"</strong> - Aggiunge alla lista della spesa</div>
+            <div class="list-item"><strong>"Mostra impegni"</strong> - Visualizza i tuoi impegni</div>
+            <div class="list-item"><strong>"Inizia registrazione"</strong> - Avvia una registrazione vocale</div>
+            <div class="list-item"><strong>"Ferma registrazione"</strong> - Interrompi la registrazione</div>
+            <div class="list-item"><strong>"Salva registrazione"</strong> - Salva la registrazione corrente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="settings" class="tab-content">
+      <div class="dashboard">
+        <div class="card">
+          <h3>Impostazioni Utente</h3>
+          <div class="input-group">
+            <label>Il tuo nome</label>
+            <input type="text" id="userNameInput" placeholder="Inserisci il tuo nome" />
+            <button class="btn" onclick="saveUserName()">Salva Nome</button>
+          </div>
+
+          <div class="input-group">
+            <label>Tema dell'interfaccia</label>
+            <select id="themeSelect">
+              <option value="default">Default</option>
+              <option value="blue">Blu</option>
+              <option value="green">Verde</option>
+              <option value="purple">Viola</option>
+              <option value="dark">Scuro</option>
+            </select>
+            <button class="btn" onclick="changeTheme()">Cambia Tema</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Backup Dati</h3>
+          <div class="input-group">
+            <button class="btn" onclick="exportData()">Esporta Tutti i Dati</button>
+            <button class="btn" onclick="importData()">Importa Dati</button>
+            <input type="file" id="importFile" style="display:none;" accept=".json"/>
+          </div>
+
+          <h3>Ripristino</h3>
+          <div class="input-group">
+            <button class="btn" style="background:#e74c3c;" onclick="resetData()">Ripristina Tutto</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="voice-feedback" id="voiceFeedback"><span>🎤</span></div>
+
+  <!-- Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/locale/it.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
